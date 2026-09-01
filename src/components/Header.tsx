@@ -3,112 +3,152 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+const NAV_ITEMS = [
+  {
+    label: 'Recetas',
+    href: '#',
+    children: [
+      { label: '🇪🇸 España', href: '/espana/' },
+      { label: '🇲🇽 México', href: '/mexico/' },
+      { label: '🇨🇴 Colombia', href: '/colombia/' },
+      { label: '🇺🇸 USA', href: '/usa/' },
+      { label: '🇬🇹 Guatemala', href: '/guatemala/' },
+      { label: '🇨🇱 Chile', href: '/chile/' },
+      { label: '🇵🇷 Puerto Rico', href: '/puerto-rico/' },
+    ],
+  },
+  {
+    label: 'Temas',
+    href: '#',
+    children: [
+      { label: 'Curiosidades', href: '/curiosidades/' },
+      { label: 'Reseñas', href: '/resenas/' },
+      { label: 'Técnicas de Cocina', href: '/tecnicas/' },
+      { label: 'Repostería', href: '/reposteria/' },
+      { label: 'Utensilios', href: '/utensilios/' },
+      { label: 'Mejores Chef', href: '/mejores-chef/' },
+    ],
+  },
+  { label: 'Cocina Saludable', href: '/saludable/' },
+  { label: 'Cocina Rápida', href: '/rapida/' },
+];
+
 export default function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isRecipesDropdownOpen, setIsRecipesDropdownOpen] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const toggleRecipesDropdown = () => {
-    setIsRecipesDropdownOpen(!isRecipesDropdownOpen);
-  };
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-50 bg-red-800 text-white shadow-md">
+    <header className="sticky top-0 z-50 bg-red-800 shadow-lg">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold tracking-tight">
-            Chef Experto 🍳
+          <Link href="/" className="text-xl md:text-2xl font-extrabold text-white tracking-tight hover:opacity-90 transition-opacity">
+            Chef Experto <span className="text-yellow-300">🍳</span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex space-x-6 items-center">
-            <Link href="/curiosidades" className="hover:text-red-200 transition-colors">
-              Curiosidades
-            </Link>
-            <Link href="/resenas" className="hover:text-red-200 transition-colors">
-              Reseñas
-            </Link>
-            
-            {/* Recipes Dropdown */}
-            <div className="relative group">
-              <button 
-                className="flex items-center hover:text-red-200 transition-colors"
-                onMouseEnter={() => setIsRecipesDropdownOpen(true)}
-                onMouseLeave={() => setIsRecipesDropdownOpen(false)}
-                onClick={toggleRecipesDropdown}
-                aria-expanded={isRecipesDropdownOpen}
+          <nav className="hidden lg:flex items-center space-x-1">
+            {NAV_ITEMS.map((item) => (
+              <div
+                key={item.label}
+                className="relative group"
+                onMouseEnter={() => item.children && setOpenDropdown(item.label)}
+                onMouseLeave={() => setOpenDropdown(null)}
               >
-                Recetas
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-              </button>
-              
-              <div 
-                className={`absolute left-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg py-1 ${isRecipesDropdownOpen ? 'block' : 'hidden group-hover:block'}`}
-                onMouseEnter={() => setIsRecipesDropdownOpen(true)}
-                onMouseLeave={() => setIsRecipesDropdownOpen(false)}
-              >
-                <Link href="/recetas/espana" className="block px-4 py-2 text-sm hover:bg-gray-100">España</Link>
-                <Link href="/recetas/usa" className="block px-4 py-2 text-sm hover:bg-gray-100">USA</Link>
-                <Link href="/recetas/colombia" className="block px-4 py-2 text-sm hover:bg-gray-100">Colombia</Link>
-                <Link href="/recetas/guatemala" className="block px-4 py-2 text-sm hover:bg-gray-100">Guatemala</Link>
-                <Link href="/recetas/mexico" className="block px-4 py-2 text-sm hover:bg-gray-100">México</Link>
-                <Link href="/recetas/chile" className="block px-4 py-2 text-sm hover:bg-gray-100">Chile</Link>
-                <Link href="/recetas/puerto-rico" className="block px-4 py-2 text-sm hover:bg-gray-100">Puerto Rico</Link>
-              </div>
-            </div>
+                {item.children ? (
+                  <button className="flex items-center gap-1 text-white/90 hover:text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-white/10 transition-all">
+                    {item.label}
+                    <svg className="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                ) : (
+                  <Link href={item.href} className="text-white/90 hover:text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-white/10 transition-all block">
+                    {item.label}
+                  </Link>
+                )}
 
-            <Link href="/nosotros" className="hover:text-red-200 transition-colors">
-              Nosotros
-            </Link>
+                {/* Dropdown */}
+                {item.children && openDropdown === item.label && (
+                  <div className="absolute top-full left-0 mt-0 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50 animate-in fade-in duration-150">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 transition-colors"
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </nav>
 
-          {/* Mobile menu button */}
-          <button 
-            className="md:hidden p-2 text-white hover:text-red-200 focus:outline-none"
-            onClick={toggleMobileMenu}
-            aria-label="Toggle menu"
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            className="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+            aria-label="Menú"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              {isMobileMenuOpen ? (
+            {isMobileOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+              </svg>
+            )}
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-red-900 border-t border-red-700">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link href="/curiosidades" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-red-800" onClick={() => setIsMobileMenuOpen(false)}>
-              Curiosidades
-            </Link>
-            <Link href="/resenas" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-red-800" onClick={() => setIsMobileMenuOpen(false)}>
-              Reseñas
-            </Link>
-            <div className="px-3 py-2 rounded-md text-base font-medium">
-              <span className="mb-2 block">Recetas:</span>
-              <div className="pl-4 flex flex-col space-y-2">
-                <Link href="/recetas/espana" className="hover:text-red-200" onClick={() => setIsMobileMenuOpen(false)}>España</Link>
-                <Link href="/recetas/usa" className="hover:text-red-200" onClick={() => setIsMobileMenuOpen(false)}>USA</Link>
-                <Link href="/recetas/colombia" className="hover:text-red-200" onClick={() => setIsMobileMenuOpen(false)}>Colombia</Link>
-                <Link href="/recetas/guatemala" className="hover:text-red-200" onClick={() => setIsMobileMenuOpen(false)}>Guatemala</Link>
-                <Link href="/recetas/mexico" className="hover:text-red-200" onClick={() => setIsMobileMenuOpen(false)}>México</Link>
-                <Link href="/recetas/chile" className="hover:text-red-200" onClick={() => setIsMobileMenuOpen(false)}>Chile</Link>
-                <Link href="/recetas/puerto-rico" className="hover:text-red-200" onClick={() => setIsMobileMenuOpen(false)}>Puerto Rico</Link>
+      {/* Mobile Menu */}
+      {isMobileOpen && (
+        <div className="lg:hidden bg-red-900 border-t border-red-700">
+          <nav className="container mx-auto px-4 py-4 space-y-1">
+            {NAV_ITEMS.map((item) => (
+              <div key={item.label}>
+                {item.children ? (
+                  <>
+                    <button
+                      onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
+                      className="w-full flex items-center justify-between text-white py-2.5 px-3 rounded-lg hover:bg-white/10 text-sm font-medium"
+                    >
+                      {item.label}
+                      <svg className={`w-4 h-4 transition-transform ${openDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {openDropdown === item.label && (
+                      <div className="ml-4 space-y-1 mt-1">
+                        {item.children.map((child) => (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            className="block text-red-100 hover:text-white py-2 px-3 rounded-lg text-sm hover:bg-white/10"
+                            onClick={() => setIsMobileOpen(false)}
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="block text-white py-2.5 px-3 rounded-lg hover:bg-white/10 text-sm font-medium"
+                    onClick={() => setIsMobileOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </div>
-            </div>
-            <Link href="/nosotros" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-red-800" onClick={() => setIsMobileMenuOpen(false)}>
-              Nosotros
-            </Link>
-          </div>
+            ))}
+          </nav>
         </div>
       )}
     </header>
