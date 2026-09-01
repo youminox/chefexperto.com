@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     locale: 'es_ES',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Recetas, Reseñas y Tips de Cocina`,
+    title: `${SITE_NAME} — Recetas de Cocina, Tips Culinarios y Reseñas`,
     description: SITE_DESCRIPTION,
   },
   twitter: {
@@ -40,7 +40,10 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: SITE_URL,
+    languages: {
+      'es': SITE_URL,
+      'x-default': SITE_URL,
+    },
   },
   icons: {
     icon: '/favicon.ico',

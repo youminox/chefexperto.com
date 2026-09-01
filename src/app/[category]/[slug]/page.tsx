@@ -60,7 +60,7 @@ function RelatedPostCard({ post }: { post: Post }) {
         <div className="aspect-video relative overflow-hidden bg-gray-200">
           {post.featuredImageUrl ? (
             <img
-              src={post.featuredImageUrl}
+              src={getImageUrl(post.featuredImageUrl)}
               alt={post.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
@@ -173,7 +173,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
                 {post.featuredImageUrl && (
                   <div className="mb-8 rounded-lg overflow-hidden">
                     <img
-                      src={post.featuredImageUrl}
+                      src={getImageUrl(post.featuredImageUrl)}
                       alt={post.title}
                       className="w-full h-auto rounded-lg"
                       loading="eager"

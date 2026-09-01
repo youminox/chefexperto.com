@@ -5,9 +5,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
   const categories = getAllCategories();
 
-  const postEntries: MetadataRoute.Sitemap = posts.map(post => ({
+  // Filter out posts without titles (thin content)
+  const validPosts = posts.filter(p => p.title && p.title.length >= 3);
+
+  const postEntries: MetadataRoute.Sitemap = validPosts.map(post => ({
     url: `${SITE_URL}/${post.category}/${post.slug}/`,
-    lastModified: post.modified || post.date,
+    lastModified: new Date(post.modified || post.date).toISOString(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
@@ -19,13 +22,41 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
-      url: SITE_URL,
+      url: `${SITE_URL}/`,
       lastModified: new Date().toISOString(),
       changeFrequency: 'daily',
       priority: 1.0,
     },
+    {
+      url: `${SITE_URL}/privacy-policy/`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${SITE_URL}/aviso-legal/`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${SITE_URL}/politica-de-cookies/`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${SITE_URL}/hola-hablamos/`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: 'yearly',
+      priority: 0.4,
+    },
+  ];
+
+  return [
+    ...staticPages,
     ...categoryEntries,
     ...postEntries,
   ];

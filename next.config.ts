@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // WordPress category URL compatibility
       {
         source: '/category/:slug/',
         destination: '/:slug/',
@@ -24,14 +25,45 @@ const nextConfig: NextConfig = {
         destination: '/:slug/',
         permanent: true,
       },
+      // Old footer links that were broken
       {
-        source: '/feed/',
-        destination: '/sitemap.xml',
+        source: '/recetas/:slug/',
+        destination: '/:slug/',
         permanent: true,
       },
       {
-        source: '/feed',
-        destination: '/sitemap.xml',
+        source: '/recetas/:slug',
+        destination: '/:slug/',
+        permanent: true,
+      },
+      {
+        source: '/politica-de-privacidad/',
+        destination: '/privacy-policy/',
+        permanent: true,
+      },
+      {
+        source: '/politica-de-privacidad',
+        destination: '/privacy-policy/',
+        permanent: true,
+      },
+      {
+        source: '/contacto/',
+        destination: '/hola-hablamos/',
+        permanent: true,
+      },
+      {
+        source: '/contacto',
+        destination: '/hola-hablamos/',
+        permanent: true,
+      },
+      {
+        source: '/nosotros/',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/nosotros',
+        destination: '/',
         permanent: true,
       },
     ];

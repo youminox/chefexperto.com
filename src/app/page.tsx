@@ -1,21 +1,26 @@
-'use client';
-
-import { useState } from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { getFeaturedPosts, getRecentPosts, getAllCategories, getPostUrl, getImageUrl, formatDate, SITE_NAME } from '@/lib/data';
+import HeroSearch from '@/components/HeroSearch';
+import { getFeaturedPosts, getRecentPosts, getAllCategories, getPostUrl, getImageUrl, formatDate, SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/data';
 import type { Post, Category } from '@/lib/types';
+
+export const metadata: Metadata = {
+  title: `${SITE_NAME} — Recetas de Cocina, Tips Culinarios y Reseñas de Utensilios`,
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: `${SITE_URL}/` },
+};
 
 /* ─── Category groupings ─── */
 const COUNTRY_CATEGORIES = [
-  { slug: 'espana', emoji: '🇪🇸' },
-  { slug: 'mexico', emoji: '🇲🇽' },
-  { slug: 'colombia', emoji: '🇨🇴' },
-  { slug: 'usa', emoji: '🇺🇸' },
-  { slug: 'guatemala', emoji: '🇬🇹' },
-  { slug: 'chile', emoji: '🇨🇱' },
-  { slug: 'puerto-rico', emoji: '🇵🇷' },
+  { slug: 'espana', emoji: '🇪🇸', label: 'España' },
+  { slug: 'mexico', emoji: '🇲🇽', label: 'México' },
+  { slug: 'colombia', emoji: '🇨🇴', label: 'Colombia' },
+  { slug: 'usa', emoji: '🇺🇸', label: 'USA' },
+  { slug: 'guatemala', emoji: '🇬🇹', label: 'Guatemala' },
+  { slug: 'chile', emoji: '🇨🇱', label: 'Chile' },
+  { slug: 'puerto-rico', emoji: '🇵🇷', label: 'Puerto Rico' },
 ];
 
 const TOPIC_CATEGORIES = [
@@ -33,18 +38,8 @@ const AUDIENCE_CATEGORIES = [
 
 /* ─── Hero Banner with Bubbles & Search ─── */
 function HeroBanner() {
-  const [query, setQuery] = useState('');
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query.trim()) {
-      window.open(`https://www.google.com/search?q=site:chefexperto.com+${encodeURIComponent(query)}`, '_blank');
-    }
-  };
-
   return (
     <section className="hero-banner py-20 md:py-24 lg:py-28">
-      {/* Animated bubbles */}
       <div className="bubbles">
         <span /><span /><span /><span /><span />
         <span /><span /><span /><span /><span />
@@ -55,26 +50,12 @@ function HeroBanner() {
           Recetas de Cocina, Tips y Reseñas
         </h1>
         <p className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Descubre las mejores recetas del mundo, técnicas culinarias paso a paso 
+          Descubre las mejores recetas del mundo, técnicas culinarias paso a paso
           y reseñas de utensilios para tu cocina
         </p>
 
-        {/* Search bar */}
-        <form onSubmit={handleSearch} className="hero-search mb-16">
-          <input
-            type="text"
-            placeholder="¿Qué quieres cocinar hoy? Ej. Tortilla de patatas"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button type="submit" aria-label="Buscar">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </button>
-        </form>
+        <HeroSearch />
 
-        {/* Quick country pills */}
         <div className="flex flex-wrap justify-center gap-3">
           {COUNTRY_CATEGORIES.map(c => (
             <Link
@@ -82,15 +63,14 @@ function HeroBanner() {
               href={`/${c.slug}/`}
               className="bg-white/10 backdrop-blur-sm text-white border border-white/20 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-gray-900 transition-all duration-300 text-sm"
             >
-              {c.emoji} {c.slug.charAt(0).toUpperCase() + c.slug.slice(1).replace('-', ' ')}
+              {c.emoji} {c.label}
             </Link>
           ))}
         </div>
 
-        {/* Stats row */}
         <div className="flex justify-center gap-12 md:gap-20 mt-14">
           <div className="text-center">
-            <span className="block text-2xl md:text-3xl font-extrabold text-red-400">4,757+</span>
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-400">4,300+</span>
             <span className="text-xs md:text-sm text-gray-400 uppercase tracking-wider font-medium">Artículos</span>
           </div>
           <div className="text-center">
@@ -120,6 +100,8 @@ function PostCard({ post }: { post: Post }) {
             <img
               src={imageUrl}
               alt={post.title}
+              width={640}
+              height={400}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
@@ -128,7 +110,6 @@ function PostCard({ post }: { post: Post }) {
               🍳
             </div>
           )}
-          {/* Category badge floating on image */}
           <span className="absolute top-3 left-3 bg-red-700 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">
             {post.categoryName}
           </span>
@@ -138,13 +119,8 @@ function PostCard({ post }: { post: Post }) {
         <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-700 transition-colors leading-snug">
           <Link href={getPostUrl(post)}>{post.title}</Link>
         </h3>
-        <p className="text-sm text-gray-500 line-clamp-2 mb-3 flex-1">
-          {excerpt}
-        </p>
+        <p className="text-sm text-gray-500 line-clamp-2 mb-3 flex-1">{excerpt}</p>
         <div className="flex items-center text-xs text-gray-400 mt-auto pt-3 border-t border-gray-50">
-          <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
           <time dateTime={post.date}>{formatDate(post.date)}</time>
         </div>
       </div>
@@ -155,19 +131,9 @@ function PostCard({ post }: { post: Post }) {
 /* ─── Categories Section (Grouped) ─── */
 function CategoriesSection({ categories }: { categories: Category[] }) {
   const catMap = new Map(categories.map(c => [c.slug, c]));
-
-  const countryCats = COUNTRY_CATEGORIES
-    .map(c => catMap.get(c.slug))
-    .filter((c): c is Category => !!c);
-
-  const topicCats = TOPIC_CATEGORIES
-    .map(slug => catMap.get(slug))
-    .filter((c): c is Category => !!c);
-
-  const audienceCats = AUDIENCE_CATEGORIES
-    .map(slug => catMap.get(slug))
-    .filter((c): c is Category => !!c);
-
+  const countryCats = COUNTRY_CATEGORIES.map(c => catMap.get(c.slug)).filter((c): c is Category => !!c);
+  const topicCats = TOPIC_CATEGORIES.map(slug => catMap.get(slug)).filter((c): c is Category => !!c);
+  const audienceCats = AUDIENCE_CATEGORIES.map(slug => catMap.get(slug)).filter((c): c is Category => !!c);
   const otherCats = categories.filter(c =>
     !COUNTRY_CATEGORIES.some(cc => cc.slug === c.slug) &&
     !TOPIC_CATEGORIES.includes(c.slug) &&
@@ -181,89 +147,51 @@ function CategoriesSection({ categories }: { categories: Category[] }) {
           Categorías de Recetas y Cocina
         </h2>
 
-        {/* Recetas por País */}
         <div className="mb-10">
-          <h3 className="category-group-title text-xl font-bold text-gray-800 mb-5 pb-2">
-            🌎 Recetas por País
-          </h3>
+          <h3 className="category-group-title text-xl font-bold text-gray-800 mb-5 pb-2">🌎 Recetas por País</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
             {countryCats.map(cat => {
               const emoji = COUNTRY_CATEGORIES.find(c => c.slug === cat.slug)?.emoji || '🍽️';
               return (
-                <Link
-                  key={cat.slug}
-                  href={`/${cat.slug}/`}
-                  className="bg-white hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-xl p-4 text-center transition-all duration-200 group shadow-sm hover:shadow-md"
-                >
+                <Link key={cat.slug} href={`/${cat.slug}/`} className="bg-white hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-xl p-4 text-center transition-all duration-200 group shadow-sm hover:shadow-md">
                   <span className="text-2xl block mb-2">{emoji}</span>
-                  <span className="block text-sm font-semibold text-gray-800 group-hover:text-red-700">
-                    {cat.name}
-                  </span>
-                  <span className="text-xs text-gray-400 mt-1 block">
-                    {cat.count} recetas
-                  </span>
+                  <span className="block text-sm font-semibold text-gray-800 group-hover:text-red-700">{cat.name}</span>
+                  <span className="text-xs text-gray-400 mt-1 block">{cat.count} recetas</span>
                 </Link>
               );
             })}
           </div>
         </div>
 
-        {/* Temas de Cocina */}
         <div className="mb-10">
-          <h3 className="category-group-title text-xl font-bold text-gray-800 mb-5 pb-2">
-            👨‍🍳 Temas de Cocina
-          </h3>
+          <h3 className="category-group-title text-xl font-bold text-gray-800 mb-5 pb-2">👨‍🍳 Temas de Cocina</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
             {topicCats.map(cat => (
-              <Link
-                key={cat.slug}
-                href={`/${cat.slug}/`}
-                className="bg-white hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-xl px-4 py-3 text-center transition-all duration-200 group shadow-sm hover:shadow-md"
-              >
-                <span className="block text-sm font-semibold text-gray-800 group-hover:text-red-700">
-                  {cat.name}
-                </span>
-                <span className="text-xs text-gray-400">
-                  {cat.count} artículos
-                </span>
+              <Link key={cat.slug} href={`/${cat.slug}/`} className="bg-white hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-xl px-4 py-3 text-center transition-all duration-200 group shadow-sm hover:shadow-md">
+                <span className="block text-sm font-semibold text-gray-800 group-hover:text-red-700">{cat.name}</span>
+                <span className="text-xs text-gray-400">{cat.count} artículos</span>
               </Link>
             ))}
           </div>
         </div>
 
-        {/* Cocina para... */}
         <div className="mb-4">
-          <h3 className="category-group-title text-xl font-bold text-gray-800 mb-5 pb-2">
-            🎯 Cocina Especializada
-          </h3>
+          <h3 className="category-group-title text-xl font-bold text-gray-800 mb-5 pb-2">🎯 Cocina Especializada</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {audienceCats.map(cat => (
-              <Link
-                key={cat.slug}
-                href={`/${cat.slug}/`}
-                className="bg-white hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-xl px-4 py-3 text-center transition-all duration-200 group shadow-sm hover:shadow-md"
-              >
-                <span className="block text-sm font-semibold text-gray-800 group-hover:text-red-700">
-                  {cat.name}
-                </span>
-                <span className="text-xs text-gray-400">
-                  {cat.count} artículos
-                </span>
+              <Link key={cat.slug} href={`/${cat.slug}/`} className="bg-white hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-xl px-4 py-3 text-center transition-all duration-200 group shadow-sm hover:shadow-md">
+                <span className="block text-sm font-semibold text-gray-800 group-hover:text-red-700">{cat.name}</span>
+                <span className="text-xs text-gray-400">{cat.count} artículos</span>
               </Link>
             ))}
           </div>
         </div>
 
-        {/* Other categories */}
         {otherCats.length > 0 && (
           <div className="mt-6">
             <div className="flex flex-wrap justify-center gap-2">
               {otherCats.map(cat => (
-                <Link
-                  key={cat.slug}
-                  href={`/${cat.slug}/`}
-                  className="bg-gray-100 hover:bg-red-50 text-gray-700 hover:text-red-700 px-4 py-2 rounded-full text-sm font-medium transition-colors"
-                >
+                <Link key={cat.slug} href={`/${cat.slug}/`} className="bg-gray-100 hover:bg-red-50 text-gray-700 hover:text-red-700 px-4 py-2 rounded-full text-sm font-medium transition-colors">
                   {cat.name} ({cat.count})
                 </Link>
               ))}
@@ -275,7 +203,7 @@ function CategoriesSection({ categories }: { categories: Category[] }) {
   );
 }
 
-/* ─── Main Page ─── */
+/* ─── Main Page (Server Component) ─── */
 export default function HomePage() {
   const featuredPosts = getFeaturedPosts(6);
   const recentPosts = getRecentPosts(12);
@@ -287,7 +215,6 @@ export default function HomePage() {
       <main>
         <HeroBanner />
 
-        {/* Featured Posts */}
         <section className="py-14">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
@@ -304,10 +231,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Categories (Grouped) */}
         <CategoriesSection categories={categories} />
 
-        {/* Recent Posts */}
         <section className="py-14">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
