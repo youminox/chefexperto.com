@@ -1,0 +1,258 @@
+[
+  {
+    "id": 1,
+    "slug": "blog",
+    "name": "Blog",
+    "parent": "",
+    "description": "Your blog category",
+    "count": 461
+  },
+  {
+    "id": 8,
+    "slug": "chile",
+    "name": "Chile",
+    "parent": "",
+    "description": "",
+    "count": 98
+  },
+  {
+    "id": 30,
+    "slug": "cocina-con-bajo-presupuesto",
+    "name": "Cocina con Bajo Presupuesto",
+    "parent": "",
+    "description": "",
+    "count": 161
+  },
+  {
+    "id": 16,
+    "slug": "internacional",
+    "name": "Cocina Internacional",
+    "parent": "",
+    "description": "",
+    "count": 266
+  },
+  {
+    "id": 28,
+    "slug": "cocina-para-acampar",
+    "name": "Cocina para Acampar",
+    "parent": "",
+    "description": "",
+    "count": 191
+  },
+  {
+    "id": 26,
+    "slug": "cocina-para-deportistas",
+    "name": "Cocina para Deportistas",
+    "parent": "",
+    "description": "",
+    "count": 188
+  },
+  {
+    "id": 29,
+    "slug": "cocina-para-la-concentracion-y-el-estudio",
+    "name": "Cocina para la Concentración y el Estudio",
+    "parent": "",
+    "description": "",
+    "count": 46
+  },
+  {
+    "id": 22,
+    "slug": "cocina-para-ninos",
+    "name": "Cocina para Niños",
+    "parent": "",
+    "description": "",
+    "count": 192
+  },
+  {
+    "id": 27,
+    "slug": "cocina-para-oficina",
+    "name": "Cocina para Oficina",
+    "parent": "",
+    "description": "",
+    "count": 57
+  },
+  {
+    "id": 23,
+    "slug": "cocina-para-personas-mayores",
+    "name": "Cocina para Personas Mayores",
+    "parent": "",
+    "description": "",
+    "count": 193
+  },
+  {
+    "id": 25,
+    "slug": "cocina-para-principiantes",
+    "name": "Cocina para Principiantes",
+    "parent": "",
+    "description": "",
+    "count": 48
+  },
+  {
+    "id": 19,
+    "slug": "rapida",
+    "name": "Cocina Rápida y Fácil",
+    "parent": "",
+    "description": "",
+    "count": 97
+  },
+  {
+    "id": 14,
+    "slug": "saludable",
+    "name": "Cocina Saludable",
+    "parent": "",
+    "description": "",
+    "count": 98
+  },
+  {
+    "id": 24,
+    "slug": "cocina-sostenible",
+    "name": "Cocina Sostenible",
+    "parent": "",
+    "description": "",
+    "count": 44
+  },
+  {
+    "id": 10,
+    "slug": "colombia",
+    "name": "Colombia",
+    "parent": "",
+    "description": "",
+    "count": 89
+  },
+  {
+    "id": 21,
+    "slug": "consejos",
+    "name": "Consejos para Emprender en Cocina",
+    "parent": "",
+    "description": "",
+    "count": 169
+  },
+  {
+    "id": 4,
+    "slug": "curiosidades",
+    "name": "Curiosidades",
+    "parent": "",
+    "description": "",
+    "count": 69
+  },
+  {
+    "id": 5,
+    "slug": "espana",
+    "name": "España",
+    "parent": "",
+    "description": "",
+    "count": 102
+  },
+  {
+    "id": 11,
+    "slug": "guatemala",
+    "name": "Guatemala",
+    "parent": "",
+    "description": "",
+    "count": 85
+  },
+  {
+    "id": 18,
+    "slug": "ingredientes",
+    "name": "Ingredientes y Sabores",
+    "parent": "",
+    "description": "",
+    "count": 190
+  },
+  {
+    "id": 33,
+    "slug": "mejores-chef",
+    "name": "Mejores Chef",
+    "parent": "",
+    "description": "",
+    "count": 103
+  },
+  {
+    "id": 9,
+    "slug": "mexico",
+    "name": "Mexico",
+    "parent": "",
+    "description": "",
+    "count": 95
+  },
+  {
+    "id": 7,
+    "slug": "puerto-rico",
+    "name": "Puerto Rico",
+    "parent": "",
+    "description": "",
+    "count": 97
+  },
+  {
+    "id": 15,
+    "slug": "reposteria",
+    "name": "Repostería y Panadería",
+    "parent": "",
+    "description": "",
+    "count": 103
+  },
+  {
+    "id": 3,
+    "slug": "resenas",
+    "name": "Reseñas",
+    "parent": "",
+    "description": "",
+    "count": 20
+  },
+  {
+    "id": 31,
+    "slug": "restaurantes-de-america",
+    "name": "Restaurantes de America",
+    "parent": "",
+    "description": "",
+    "count": 419
+  },
+  {
+    "id": 32,
+    "slug": "restaurantes-en-europa",
+    "name": "Restaurantes en Europa",
+    "parent": "",
+    "description": "",
+    "count": 360
+  },
+  {
+    "id": 12,
+    "slug": "tecnicas",
+    "name": "Técnicas de Cocina",
+    "parent": "",
+    "description": "",
+    "count": 196
+  },
+  {
+    "id": 20,
+    "slug": "tendencias",
+    "name": "Tendencias Gastronómicas",
+    "parent": "",
+    "description": "",
+    "count": 189
+  },
+  {
+    "id": 17,
+    "slug": "tips",
+    "name": "Tips de Ahorro y Organización en Cocina",
+    "parent": "",
+    "description": "",
+    "count": 43
+  },
+  {
+    "id": 6,
+    "slug": "usa",
+    "name": "USA",
+    "parent": "",
+    "description": "",
+    "count": 101
+  },
+  {
+    "id": 13,
+    "slug": "utensilios",
+    "name": "Utensilios y Equipos",
+    "parent": "",
+    "description": "",
+    "count": 187
+  }
+]
