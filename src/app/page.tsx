@@ -43,7 +43,7 @@ function HeroBanner() {
   };
 
   return (
-    <section className="hero-banner py-20 md:py-28 lg:py-32">
+    <section className="hero-banner py-20 md:py-24 lg:py-28">
       {/* Animated bubbles */}
       <div className="bubbles">
         <span /><span /><span /><span /><span />
@@ -51,19 +51,19 @@ function HeroBanner() {
       </div>
 
       <div className="relative z-10 container mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 drop-shadow-lg">
-          Chef Experto
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-4 drop-shadow-lg leading-tight">
+          Recetas de Cocina, Tips y Reseñas
         </h1>
-        <p className="text-lg md:text-xl text-red-100 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Tu guía esencial de recetas y cocina: encuentra las mejores recetas, 
-          tips culinarios y reseñas de todas partes del mundo
+        <p className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+          Descubre las mejores recetas del mundo, técnicas culinarias paso a paso 
+          y reseñas de utensilios para tu cocina
         </p>
 
         {/* Search bar */}
-        <form onSubmit={handleSearch} className="hero-search mb-10">
+        <form onSubmit={handleSearch} className="hero-search mb-16">
           <input
             type="text"
-            placeholder="Buscar recetas, ingredientes, tips..."
+            placeholder="¿Qué quieres cocinar hoy? Ej. Tortilla de patatas"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -80,11 +80,27 @@ function HeroBanner() {
             <Link
               key={c.slug}
               href={`/${c.slug}/`}
-              className="bg-white/15 backdrop-blur-sm text-white border border-white/25 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-red-800 transition-all duration-300 text-sm"
+              className="bg-white/10 backdrop-blur-sm text-white border border-white/20 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-gray-900 transition-all duration-300 text-sm"
             >
               {c.emoji} {c.slug.charAt(0).toUpperCase() + c.slug.slice(1).replace('-', ' ')}
             </Link>
           ))}
+        </div>
+
+        {/* Stats row */}
+        <div className="flex justify-center gap-12 md:gap-20 mt-14">
+          <div className="text-center">
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-400">4,757+</span>
+            <span className="text-xs md:text-sm text-gray-400 uppercase tracking-wider font-medium">Artículos</span>
+          </div>
+          <div className="text-center">
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-400">32</span>
+            <span className="text-xs md:text-sm text-gray-400 uppercase tracking-wider font-medium">Categorías</span>
+          </div>
+          <div className="text-center">
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-400">7</span>
+            <span className="text-xs md:text-sm text-gray-400 uppercase tracking-wider font-medium">Países</span>
+          </div>
         </div>
       </div>
     </section>
@@ -162,7 +178,7 @@ function CategoriesSection({ categories }: { categories: Category[] }) {
     <section className="py-14 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
-          Explora Nuestro Contenido
+          Categorías de Recetas y Cocina
         </h2>
 
         {/* Recetas por País */}
@@ -276,7 +292,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-                Artículos Destacados
+                Recetas y Artículos Destacados
               </h2>
               <span className="hidden md:block h-px bg-gray-200 flex-1 ml-6" />
             </div>
@@ -296,7 +312,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-                Últimos Artículos
+                Últimas Recetas y Guías de Cocina
               </h2>
               <span className="hidden md:block h-px bg-gray-200 flex-1 ml-6" />
             </div>

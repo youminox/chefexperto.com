@@ -100,11 +100,11 @@ export default async function CategoryPage({ params }: { params: Params }) {
     <>
       <Header />
       <main className="min-h-screen">
-        <div className="bg-gradient-to-r from-red-800 to-red-900 text-white py-10">
+        <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-slate-900 text-white py-12">
           <div className="container mx-auto px-4">
             <Breadcrumbs items={breadcrumbItems} />
-            <h1 className="text-3xl md:text-4xl font-bold mt-4">{category.name}</h1>
-            <p className="text-red-100 mt-2">{category.count} artículos</p>
+            <h1 className="text-3xl md:text-4xl font-bold mt-4">{category.name}: Artículos y Recetas</h1>
+            <p className="text-gray-300 mt-2">{category.count} artículos sobre {category.name.toLowerCase()}</p>
           </div>
         </div>
 

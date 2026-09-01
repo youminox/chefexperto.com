@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Recetas, Reseñas y Tips de Cocina`,
+    default: `${SITE_NAME} — Recetas de Cocina, Tips Culinarios y Reseñas de Utensilios`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
