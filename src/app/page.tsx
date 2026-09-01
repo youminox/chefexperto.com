@@ -49,37 +49,37 @@ function HeroBanner() {
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-4 drop-shadow-lg leading-tight">
           Recetas de Cocina, Tips y Reseñas
         </h1>
-        <p className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-base md:text-lg text-red-100 max-w-2xl mx-auto mb-10 leading-relaxed">
           Descubre las mejores recetas del mundo, técnicas culinarias paso a paso
           y reseñas de utensilios para tu cocina
         </p>
 
         <HeroSearch />
 
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="flex flex-wrap justify-center gap-3 mt-8">
           {COUNTRY_CATEGORIES.map(c => (
             <Link
               key={c.slug}
               href={`/${c.slug}/`}
-              className="bg-white/10 backdrop-blur-sm text-white border border-white/20 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-gray-900 transition-all duration-300 text-sm"
+              className="bg-white/15 backdrop-blur-sm text-white border border-white/25 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-red-800 transition-all duration-300 text-sm"
             >
               {c.emoji} {c.label}
             </Link>
           ))}
         </div>
 
-        <div className="flex justify-center gap-12 md:gap-20 mt-14">
+        <div className="flex justify-center gap-12 md:gap-20 mt-12">
           <div className="text-center">
-            <span className="block text-2xl md:text-3xl font-extrabold text-red-400">4,300+</span>
-            <span className="text-xs md:text-sm text-gray-400 uppercase tracking-wider font-medium">Artículos</span>
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-200">4,300+</span>
+            <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium">Recetas</span>
           </div>
           <div className="text-center">
-            <span className="block text-2xl md:text-3xl font-extrabold text-red-400">32</span>
-            <span className="text-xs md:text-sm text-gray-400 uppercase tracking-wider font-medium">Categorías</span>
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-200">32</span>
+            <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium">Categorías</span>
           </div>
           <div className="text-center">
-            <span className="block text-2xl md:text-3xl font-extrabold text-red-400">7</span>
-            <span className="text-xs md:text-sm text-gray-400 uppercase tracking-wider font-medium">Países</span>
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-200">100%</span>
+            <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium">Experto</span>
           </div>
         </div>
       </div>
