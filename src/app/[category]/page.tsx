@@ -100,7 +100,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
     <>
       <Header />
       <main className="min-h-screen">
-        <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-slate-900 text-white py-12">
+        <div className="bg-gradient-to-b from-[#c0392b] via-[#a93226] to-[#922b21] text-white py-12">
           <div className="container mx-auto px-4">
             <Breadcrumbs items={breadcrumbItems} />
             <h1 className="text-3xl md:text-4xl font-bold mt-4">{category.name}: Artículos y Recetas</h1>
