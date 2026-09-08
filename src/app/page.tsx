@@ -43,7 +43,6 @@ function HeroBanner() {
     <section className="hero-banner py-20 md:py-24 lg:py-28">
       <div className="bubbles">
         <span /><span /><span /><span /><span />
-        <span /><span /><span /><span /><span />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 text-center">
@@ -62,25 +61,25 @@ function HeroBanner() {
             <Link
               key={c.slug}
               href={`/${c.slug}/`}
-              className="bg-white/15 backdrop-blur-sm text-white border border-white/25 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-red-800 transition-all duration-300 text-sm"
+              className="bg-white/15 text-white border border-white/25 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-red-800 transition-all duration-300 text-sm"
             >
               {c.emoji} {c.label}
             </Link>
           ))}
         </div>
 
-        <div className="flex justify-center gap-12 md:gap-20 mt-12">
+        <div className="flex justify-center gap-12 md:gap-20 mt-12 min-h-[72px]">
           <div className="text-center">
-            <span className="block text-2xl md:text-3xl font-extrabold text-red-200">4,300+</span>
-            <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium">Recetas</span>
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-200 leading-tight">4,300+</span>
+            <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium leading-normal">Recetas</span>
           </div>
           <div className="text-center">
-            <span className="block text-2xl md:text-3xl font-extrabold text-red-200">32</span>
-            <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium">Categorías</span>
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-200 leading-tight">32</span>
+            <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium leading-normal">Categorías</span>
           </div>
           <div className="text-center">
-            <span className="block text-2xl md:text-3xl font-extrabold text-red-200">100%</span>
-            <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium">Experto</span>
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-200 leading-tight">100%</span>
+            <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium leading-normal">Experto</span>
           </div>
         </div>
       </div>

@@ -127,6 +127,7 @@
   height: 100%;
   overflow: hidden;
   pointer-events: none;
+  contain: layout style paint;
 }
 
 .bubbles span {
@@ -184,36 +185,6 @@
   left: 45%;
   --duration: 16s;
   --delay: 3s;
-}
-.bubbles span:nth-child(6) {
-  --size: 120px;
-  left: 55%;
-  --duration: 25s;
-  --delay: 1s;
-}
-.bubbles span:nth-child(7) {
-  --size: 60px;
-  left: 65%;
-  --duration: 19s;
-  --delay: 5s;
-}
-.bubbles span:nth-child(8) {
-  --size: 35px;
-  left: 75%;
-  --duration: 17s;
-  --delay: 2s;
-}
-.bubbles span:nth-child(9) {
-  --size: 70px;
-  left: 85%;
-  --duration: 21s;
-  --delay: 4s;
-}
-.bubbles span:nth-child(10) {
-  --size: 90px;
-  left: 95%;
-  --duration: 23s;
-  --delay: 1s;
 }
 
 /* Search input in hero */

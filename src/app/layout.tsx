@@ -6,7 +6,7 @@ import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
 });
 
 export const viewport: Viewport = {
