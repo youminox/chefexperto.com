@@ -51,7 +51,10 @@
   }
 
   .article-content img {
-    @apply rounded-lg shadow-md my-6 mx-auto max-w-full h-auto;
+    @apply rounded-lg shadow-md my-6 mx-auto max-w-full;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
   }
 
   .article-content table {

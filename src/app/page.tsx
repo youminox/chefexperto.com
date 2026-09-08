@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import HeroSearch from '@/components/HeroSearch';
@@ -97,13 +98,12 @@ function PostCard({ post }: { post: Post }) {
       <Link href={getPostUrl(post)} className="block">
         <div className="aspect-[16/10] relative overflow-hidden bg-gray-100">
           {post.featuredImageUrl ? (
-            <img
+            <Image
               src={imageUrl}
               alt={post.title}
-              width={640}
-              height={400}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-300 text-5xl bg-gradient-to-br from-gray-50 to-gray-200">

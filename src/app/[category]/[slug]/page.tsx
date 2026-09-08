@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -59,11 +60,12 @@ function RelatedPostCard({ post }: { post: Post }) {
       <Link href={getPostUrl(post)} className="block">
         <div className="aspect-video relative overflow-hidden bg-gray-200">
           {post.featuredImageUrl ? (
-            <img
+            <Image
               src={getImageUrl(post.featuredImageUrl)}
               alt={post.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-400 text-4xl">🍳</div>
@@ -172,11 +174,14 @@ export default async function ArticlePage({ params }: { params: Params }) {
                 {/* Featured Image */}
                 {post.featuredImageUrl && (
                   <div className="mb-8 rounded-lg overflow-hidden">
-                    <img
+                    <Image
                       src={getImageUrl(post.featuredImageUrl)}
                       alt={post.title}
+                      width={1200}
+                      height={675}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
+                      preload={true}
                       className="w-full h-auto rounded-lg"
-                      loading="eager"
                     />
                   </div>
                 )}
