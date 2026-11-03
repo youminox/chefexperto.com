@@ -2,31 +2,32 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import CountryFlag from '@/components/CountryFlag';
 
 const NAV_ITEMS = [
   {
     label: 'Recetas',
     href: '#',
     children: [
-      { label: '🇪🇸 España', href: '/espana/' },
-      { label: '🇲🇽 México', href: '/mexico/' },
-      { label: '🇨🇴 Colombia', href: '/colombia/' },
-      { label: '🇺🇸 USA', href: '/usa/' },
-      { label: '🇬🇹 Guatemala', href: '/guatemala/' },
-      { label: '🇨🇱 Chile', href: '/chile/' },
-      { label: '🇵🇷 Puerto Rico', href: '/puerto-rico/' },
+      { label: 'España', slug: 'espana', href: '/espana/' },
+      { label: 'México', slug: 'mexico', href: '/mexico/' },
+      { label: 'Colombia', slug: 'colombia', href: '/colombia/' },
+      { label: 'USA', slug: 'usa', href: '/usa/' },
+      { label: 'Guatemala', slug: 'guatemala', href: '/guatemala/' },
+      { label: 'Chile', slug: 'chile', href: '/chile/' },
+      { label: 'Puerto Rico', slug: 'puerto-rico', href: '/puerto-rico/' },
     ],
   },
   {
     label: 'Temas',
     href: '#',
     children: [
-      { label: 'Curiosidades', href: '/curiosidades/' },
-      { label: 'Reseñas', href: '/resenas/' },
-      { label: 'Técnicas de Cocina', href: '/tecnicas/' },
-      { label: 'Repostería', href: '/reposteria/' },
-      { label: 'Utensilios', href: '/utensilios/' },
-      { label: 'Mejores Chef', href: '/mejores-chef/' },
+      { label: 'Curiosidades', slug: '', href: '/curiosidades/' },
+      { label: 'Reseñas', slug: '', href: '/resenas/' },
+      { label: 'Técnicas de Cocina', slug: '', href: '/tecnicas/' },
+      { label: 'Repostería', slug: '', href: '/reposteria/' },
+      { label: 'Utensilios', slug: '', href: '/utensilios/' },
+      { label: 'Mejores Chef', slug: '', href: '/mejores-chef/' },
     ],
   },
   { label: 'Cocina Saludable', href: '/saludable/' },
@@ -75,9 +76,10 @@ export default function Header() {
                       <Link
                         key={child.href}
                         href={child.href}
-                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 transition-colors"
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 transition-colors"
                       >
-                        {child.label}
+                        {child.slug && <CountryFlag slug={child.slug} />}
+                        <span>{child.label}</span>
                       </Link>
                     ))}
                   </div>
@@ -128,10 +130,11 @@ export default function Header() {
                           <Link
                             key={child.href}
                             href={child.href}
-                            className="block text-red-100 hover:text-white py-2 px-3 rounded-lg text-sm hover:bg-white/10"
+                            className="flex items-center gap-2.5 text-red-100 hover:text-white py-2 px-3 rounded-lg text-sm hover:bg-white/10"
                             onClick={() => setIsMobileOpen(false)}
                           >
-                            {child.label}
+                            {child.slug && <CountryFlag slug={child.slug} />}
+                            <span>{child.label}</span>
                           </Link>
                         ))}
                       </div>

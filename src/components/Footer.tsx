@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import CountryFlag from '@/components/CountryFlag';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -22,13 +23,13 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold text-lg mb-4">Recetas por País</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/espana/" className="hover:text-red-400 transition-colors">🇪🇸 España</Link></li>
-              <li><Link href="/mexico/" className="hover:text-red-400 transition-colors">🇲🇽 México</Link></li>
-              <li><Link href="/colombia/" className="hover:text-red-400 transition-colors">🇨🇴 Colombia</Link></li>
-              <li><Link href="/usa/" className="hover:text-red-400 transition-colors">🇺🇸 USA</Link></li>
-              <li><Link href="/chile/" className="hover:text-red-400 transition-colors">🇨🇱 Chile</Link></li>
-              <li><Link href="/guatemala/" className="hover:text-red-400 transition-colors">🇬🇹 Guatemala</Link></li>
-              <li><Link href="/puerto-rico/" className="hover:text-red-400 transition-colors">🇵🇷 Puerto Rico</Link></li>
+              <li><Link href="/espana/" className="inline-flex items-center gap-2 hover:text-red-400 transition-colors"><CountryFlag slug="espana" /> España</Link></li>
+              <li><Link href="/mexico/" className="inline-flex items-center gap-2 hover:text-red-400 transition-colors"><CountryFlag slug="mexico" /> México</Link></li>
+              <li><Link href="/colombia/" className="inline-flex items-center gap-2 hover:text-red-400 transition-colors"><CountryFlag slug="colombia" /> Colombia</Link></li>
+              <li><Link href="/usa/" className="inline-flex items-center gap-2 hover:text-red-400 transition-colors"><CountryFlag slug="usa" /> USA</Link></li>
+              <li><Link href="/chile/" className="inline-flex items-center gap-2 hover:text-red-400 transition-colors"><CountryFlag slug="chile" /> Chile</Link></li>
+              <li><Link href="/guatemala/" className="inline-flex items-center gap-2 hover:text-red-400 transition-colors"><CountryFlag slug="guatemala" /> Guatemala</Link></li>
+              <li><Link href="/puerto-rico/" className="inline-flex items-center gap-2 hover:text-red-400 transition-colors"><CountryFlag slug="puerto-rico" /> Puerto Rico</Link></li>
             </ul>
           </div>
 

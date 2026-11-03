@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import HeroSearch from '@/components/HeroSearch';
+import CountryFlag from '@/components/CountryFlag';
 import { getFeaturedPosts, getRecentPosts, getAllCategories, getPostUrl, getImageUrl, formatDate, SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/data';
 import type { Post, Category } from '@/lib/types';
 
@@ -15,13 +16,13 @@ export const metadata: Metadata = {
 
 /* ─── Category groupings ─── */
 const COUNTRY_CATEGORIES = [
-  { slug: 'espana', emoji: '🇪🇸', label: 'España' },
-  { slug: 'mexico', emoji: '🇲🇽', label: 'México' },
-  { slug: 'colombia', emoji: '🇨🇴', label: 'Colombia' },
-  { slug: 'usa', emoji: '🇺🇸', label: 'USA' },
-  { slug: 'guatemala', emoji: '🇬🇹', label: 'Guatemala' },
-  { slug: 'chile', emoji: '🇨🇱', label: 'Chile' },
-  { slug: 'puerto-rico', emoji: '🇵🇷', label: 'Puerto Rico' },
+  { slug: 'espana', label: 'España' },
+  { slug: 'mexico', label: 'México' },
+  { slug: 'colombia', label: 'Colombia' },
+  { slug: 'usa', label: 'USA' },
+  { slug: 'guatemala', label: 'Guatemala' },
+  { slug: 'chile', label: 'Chile' },
+  { slug: 'puerto-rico', label: 'Puerto Rico' },
 ];
 
 const TOPIC_CATEGORIES = [
@@ -61,9 +62,10 @@ function HeroBanner() {
             <Link
               key={c.slug}
               href={`/${c.slug}/`}
-              className="bg-white/15 text-white border border-white/25 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-red-800 transition-all duration-300 text-sm"
+              className="inline-flex items-center gap-2 bg-white/15 text-white border border-white/25 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-red-800 transition-all duration-300 text-sm"
             >
-              {c.emoji} {c.label}
+              <CountryFlag slug={c.slug} className="w-5 h-3.5" />
+              <span>{c.label}</span>
             </Link>
           ))}
         </div>
@@ -149,16 +151,15 @@ function CategoriesSection({ categories }: { categories: Category[] }) {
         <div className="mb-10">
           <h3 className="category-group-title text-xl font-bold text-gray-800 mb-5 pb-2">🌎 Recetas por País</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
-            {countryCats.map(cat => {
-              const emoji = COUNTRY_CATEGORIES.find(c => c.slug === cat.slug)?.emoji || '🍽️';
-              return (
-                <Link key={cat.slug} href={`/${cat.slug}/`} className="bg-white hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-xl p-4 text-center transition-all duration-200 group shadow-sm hover:shadow-md">
-                  <span className="text-2xl block mb-2">{emoji}</span>
-                  <span className="block text-sm font-semibold text-gray-800 group-hover:text-red-700">{cat.name}</span>
-                  <span className="text-xs text-gray-400 mt-1 block">{cat.count} recetas</span>
-                </Link>
-              );
-            })}
+            {countryCats.map(cat => (
+              <Link key={cat.slug} href={`/${cat.slug}/`} className="bg-white hover:bg-red-50 border border-gray-200 hover:border-red-300 rounded-xl p-4 text-center transition-all duration-200 group shadow-sm hover:shadow-md">
+                <div className="flex justify-center mb-2.5">
+                  <CountryFlag slug={cat.slug} className="w-8 h-5.5" />
+                </div>
+                <span className="block text-sm font-semibold text-gray-800 group-hover:text-red-700">{cat.name}</span>
+                <span className="text-xs text-gray-400 mt-1 block">{cat.count} recetas</span>
+              </Link>
+            ))}
           </div>
         </div>
 
