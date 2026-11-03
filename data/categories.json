@@ -117,7 +117,7 @@
     "name": "Colombia",
     "parent": "",
     "description": "",
-    "count": 89
+    "count": 90
   },
   {
     "id": 21,
@@ -133,7 +133,7 @@
     "name": "Curiosidades",
     "parent": "",
     "description": "",
-    "count": 69
+    "count": 70
   },
   {
     "id": 5,
@@ -141,7 +141,7 @@
     "name": "España",
     "parent": "",
     "description": "",
-    "count": 102
+    "count": 103
   },
   {
     "id": 11,
@@ -157,7 +157,7 @@
     "name": "Ingredientes y Sabores",
     "parent": "",
     "description": "",
-    "count": 190
+    "count": 193
   },
   {
     "id": 33,
@@ -173,7 +173,7 @@
     "name": "Mexico",
     "parent": "",
     "description": "",
-    "count": 95
+    "count": 96
   },
   {
     "id": 7,
@@ -197,7 +197,7 @@
     "name": "Reseñas",
     "parent": "",
     "description": "",
-    "count": 20
+    "count": 21
   },
   {
     "id": 31,
@@ -221,7 +221,7 @@
     "name": "Técnicas de Cocina",
     "parent": "",
     "description": "",
-    "count": 196
+    "count": 197
   },
   {
     "id": 20,
@@ -253,6 +253,6 @@
     "name": "Utensilios y Equipos",
     "parent": "",
     "description": "",
-    "count": 187
+    "count": 189
   }
 ]
