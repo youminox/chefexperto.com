@@ -24,7 +24,33 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // WordPress category URL compatibility
+      // Legacy WordPress Sitemaps -> Next.js Sitemap
+      {
+        source: '/wp-sitemap.xml',
+        destination: '/sitemap.xml',
+        permanent: true,
+      },
+      {
+        source: '/wp-sitemap/:path*',
+        destination: '/sitemap.xml',
+        permanent: true,
+      },
+      {
+        source: '/sitemap_index.xml',
+        destination: '/sitemap.xml',
+        permanent: true,
+      },
+      // WordPress category pagination & category URL compatibility
+      {
+        source: '/category/:slug/page/:page/',
+        destination: '/:slug/',
+        permanent: true,
+      },
+      {
+        source: '/category/:slug/page/:page',
+        destination: '/:slug/',
+        permanent: true,
+      },
       {
         source: '/category/:slug/',
         destination: '/:slug/',
@@ -33,6 +59,37 @@ const nextConfig: NextConfig = {
       {
         source: '/category/:slug',
         destination: '/:slug/',
+        permanent: true,
+      },
+      {
+        source: '/:slug/page/:page/',
+        destination: '/:slug/',
+        permanent: true,
+      },
+      {
+        source: '/:slug/page/:page',
+        destination: '/:slug/',
+        permanent: true,
+      },
+      // Legacy WordPress author, tag, and feed archives
+      {
+        source: '/author/:path*',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/tag/:path*',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/feed/',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/feed',
+        destination: '/',
         permanent: true,
       },
       // Old footer links that were broken

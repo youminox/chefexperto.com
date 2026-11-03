@@ -68,12 +68,19 @@ export default function HeroSearch() {
     }
   };
 
-  // Handle form submit
-  const handleSearch = (e: React.FormEvent) => {
+  // Handle form submit (stay on site instead of sending user to Google)
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (query.trim()) {
-      setIsOpen(false);
-      window.open(`https://www.google.com/search?q=site:chefexperto.com+${encodeURIComponent(query)}`, '_blank');
+    const trimmed = query.trim();
+    if (!trimmed) return;
+
+    let index = searchIndex;
+    if (!index) {
+      index = (await loadIndex()) || null;
+    }
+    if (index) {
+      doSearch(trimmed, index);
+      inputRef.current?.focus();
     }
   };
 

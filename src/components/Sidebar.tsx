@@ -35,7 +35,7 @@ export default async function Sidebar() {
       </div>
 
       {/* Artículos Recientes */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 sticky top-20">
         <h3 className="text-xl font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2">
           Artículos Recientes
         </h3>
@@ -66,14 +66,6 @@ export default async function Sidebar() {
               </Link>
             );
           })}
-        </div>
-      </div>
-      
-      {/* Banner Ad Placeholder */}
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
-        <span className="text-xs text-gray-400 uppercase tracking-widest block mb-2">Publicidad</span>
-        <div className="w-full h-64 bg-gray-200 flex items-center justify-center rounded">
-          <span className="text-gray-400 text-sm">Espacio para anuncio</span>
         </div>
       </div>
     </aside>

@@ -5,7 +5,7 @@
     "name": "Blog",
     "parent": "",
     "description": "Your blog category",
-    "count": 23
+    "count": 1
   },
   {
     "id": 8,
@@ -29,7 +29,7 @@
     "name": "Cocina Internacional",
     "parent": "",
     "description": "",
-    "count": 266
+    "count": 193
   },
   {
     "id": 28,
@@ -189,7 +189,7 @@
     "name": "Repostería y Panadería",
     "parent": "",
     "description": "",
-    "count": 103
+    "count": 102
   },
   {
     "id": 3,

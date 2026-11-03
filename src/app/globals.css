@@ -80,6 +80,58 @@
   .article-content figcaption {
     @apply text-sm text-gray-500 text-center mt-2;
   }
+
+  /* Lazy YouTube video facade in article content */
+  .article-content #video-container {
+    margin: 1.5rem auto;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    background: #111;
+  }
+
+  .article-content .image-video-plugin {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.92;
+  }
+
+  .article-content #video-container:hover .image-video-plugin {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+
+  .article-content .youtube-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 68px;
+    height: 48px;
+    background-color: rgba(220, 38, 38, 0.92);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .article-content #video-container:hover .youtube-play-button {
+    background-color: #dc2626;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  .article-content .youtube-play-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 54%;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+    border-width: 10px 0 10px 18px;
+    border-color: transparent transparent transparent #ffffff;
+  }
 }
 
 /* Line clamp utilities */

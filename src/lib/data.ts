@@ -17,19 +17,83 @@ export function getPostsByCategorySlug(categorySlug: string): Post[] {
   return posts.filter(p => p.category === categorySlug || p.categories.some(c => c.slug === categorySlug));
 }
 
-export function getRecentPosts(limit: number = 12): Post[] {
-  return posts.slice(0, limit);
-}
+const FEATURED_SLUGS = [
+  'sustitutos-de-la-clavo-de-olor-para-recetas-saludables',
+  'descubre-la-mejor-sarten-antiadherente-sin-teflon-para-tu-cocina',
+  'como-reemplazar-la-jengibre-si-no-la-tienes-en-casa',
+  'receta-de-aguardiente-antioqueno',
+  'receta-de-tembleque-de-coco',
+  'receta-de-chupe-de-guatitas',
+];
 
 export function getFeaturedPosts(limit: number = 6): Post[] {
-  // Return most recent posts with featured images
-  return posts.filter(p => p.featuredImageUrl).slice(0, limit);
+  const featured: Post[] = [];
+  for (const slug of FEATURED_SLUGS) {
+    const found = posts.find(p => p.slug === slug && p.featuredImageUrl);
+    if (found) featured.push(found);
+    if (featured.length >= limit) return featured;
+  }
+  for (const p of posts) {
+    if (p.featuredImageUrl && !featured.some(f => f.id === p.id)) {
+      featured.push(p);
+      if (featured.length >= limit) break;
+    }
+  }
+  return featured;
+}
+
+export function getRecentPosts(limit: number = 12): Post[] {
+  const featuredIds = new Set(FEATURED_SLUGS);
+  const catCounts = new Map<string, number>();
+  const selected: Post[] = [];
+
+  for (const p of posts) {
+    if (featuredIds.has(p.slug)) continue;
+    const count = catCounts.get(p.category) || 0;
+    if (count >= 2) continue;
+    selected.push(p);
+    catCounts.set(p.category, count + 1);
+    if (selected.length >= limit) break;
+  }
+
+  return selected.length > 0 ? selected : posts.slice(0, limit);
 }
 
 export function getRelatedPosts(post: Post, limit: number = 4): Post[] {
-  return posts
-    .filter(p => p.id !== post.id && p.category === post.category)
-    .slice(0, limit);
+  const sameCategory = posts.filter(p => p.category === post.category);
+  if (sameCategory.length <= 1) return [];
+
+  const currentIndex = sameCategory.findIndex(p => p.id === post.id);
+  const startIndex = currentIndex >= 0 ? currentIndex + 1 : 0;
+  const related: Post[] = [];
+
+  for (let i = 0; i < sameCategory.length - 1 && related.length < limit; i++) {
+    const candidate = sameCategory[(startIndex + i) % sameCategory.length];
+    if (candidate.id !== post.id) {
+      related.push(candidate);
+    }
+  }
+
+  return related;
+}
+
+export function getContextualRelatedPosts(post: Post, limit: number = 3): Post[] {
+  const sameCategory = posts.filter(p => p.category === post.category);
+  if (sameCategory.length <= 1) return [];
+
+  const currentIndex = sameCategory.findIndex(p => p.id === post.id);
+  // Offset by +4 so contextual in-article links differ from bottom Related Posts
+  const startIndex = currentIndex >= 0 ? currentIndex + 5 : 4;
+  const related: Post[] = [];
+
+  for (let i = 0; i < sameCategory.length - 1 && related.length < limit; i++) {
+    const candidate = sameCategory[(startIndex + i) % sameCategory.length];
+    if (candidate.id !== post.id) {
+      related.push(candidate);
+    }
+  }
+
+  return related;
 }
 
 export function getAllCategories(): Category[] {
@@ -88,7 +152,8 @@ export function formatDate(dateStr: string): string {
 }
 
 export function generateExcerpt(content: string, maxLength: number = 160): string {
-  const text = content.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  const cleaned = content.replace(/<noscript>[\s\S]*?<\/noscript>/gi, ' ');
+  const text = cleaned.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength).replace(/\s+\S*$/, '') + '...';
 }

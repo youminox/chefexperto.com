@@ -1,12 +1,25 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Sidebar from '@/components/Sidebar';
-import { getAllPosts, getPostBySlug, getCategoryBySlug, getRelatedPosts, getPostUrl, getImageUrl, formatDate, generateExcerpt, SITE_NAME, SITE_URL } from '@/lib/data';
+import ArticleEnhancer from '@/components/ArticleEnhancer';
+import {
+  getAllPosts,
+  getPostBySlug,
+  getCategoryBySlug,
+  getRelatedPosts,
+  getContextualRelatedPosts,
+  getPostUrl,
+  getImageUrl,
+  formatDate,
+  generateExcerpt,
+  SITE_NAME,
+  SITE_URL,
+} from '@/lib/data';
 import type { Post } from '@/lib/types';
 
 type Params = Promise<{ category: string; slug: string }>;
@@ -25,8 +38,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!post) return {};
 
   const description = post.excerpt
-    ? post.excerpt.replace(/<[^>]*>/g, '').substring(0, 160)
+    ? post.excerpt.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 160)
     : generateExcerpt(post.content);
+
+  const absoluteImageUrl = post.featuredImageUrl
+    ? `${SITE_URL}${getImageUrl(post.featuredImageUrl)}`
+    : undefined;
 
   return {
     title: post.title,
@@ -38,20 +55,46 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       type: 'article',
       publishedTime: post.date,
       modifiedTime: post.modified,
-      ...(post.featuredImageUrl && {
-        images: [{ url: post.featuredImageUrl, width: 1200, height: 630 }],
+      ...(absoluteImageUrl && {
+        images: [{ url: absoluteImageUrl, width: 1200, height: 630 }],
       }),
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description,
-      ...(post.featuredImageUrl && { images: [post.featuredImageUrl] }),
+      ...(absoluteImageUrl && { images: [absoluteImageUrl] }),
     },
     alternates: {
       canonical: `${SITE_URL}/${post.category}/${post.slug}/`,
     },
   };
+}
+
+function extractFaqPairs(htmlContent: string): { question: string; answer: string }[] {
+  const faqs: { question: string; answer: string }[] = [];
+  const regex = /<h3[^>]*>\s*(¿[^<]+\?)\s*<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(htmlContent)) !== null && faqs.length < 6) {
+    const question = match[1].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    const answer = match[2].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    if (question.length > 10 && answer.length > 20) {
+      faqs.push({ question, answer });
+    }
+  }
+  return faqs;
+}
+
+function splitContentAtThirdH2(htmlContent: string): [string, string | null] {
+  const h2Matches = [...htmlContent.matchAll(/<h2[^>]*>/gi)];
+  if (h2Matches.length < 3) {
+    return [htmlContent, null];
+  }
+  const splitIndex = h2Matches[2].index;
+  if (splitIndex === undefined || splitIndex <= 0) {
+    return [htmlContent, null];
+  }
+  return [htmlContent.slice(0, splitIndex), htmlContent.slice(splitIndex)];
 }
 
 function RelatedPostCard({ post }: { post: Post }) {
@@ -86,17 +129,35 @@ export default async function ArticlePage({ params }: { params: Params }) {
   const post = getPostBySlug(slug);
 
   if (!post) {
+    if (categorySlug === 'blog') {
+      permanentRedirect('/blog/los-mejores-platos-de-comida-del-mundo-sabores-que-debes-probar/');
+    }
+    const validCat = getCategoryBySlug(categorySlug);
+    if (validCat) {
+      permanentRedirect(`/${categorySlug}/`);
+    }
     notFound();
+  }
+
+  if (categorySlug !== post.category) {
+    permanentRedirect(`/${post.category}/${post.slug}/`);
   }
 
   const category = getCategoryBySlug(post.category);
   const relatedPosts = getRelatedPosts(post, 4);
+  const contextualPosts = getContextualRelatedPosts(post, 3);
+  const [firstHalfContent, secondHalfContent] = splitContentAtThirdH2(post.content);
+  const faqPairs = extractFaqPairs(post.content);
 
   const breadcrumbItems = [
     { label: 'Inicio', href: '/' },
     { label: category?.name || post.categoryName, href: `/${post.category}/` },
     { label: post.title },
   ];
+
+  const absoluteImageUrl = post.featuredImageUrl
+    ? `${SITE_URL}${getImageUrl(post.featuredImageUrl)}`
+    : undefined;
 
   // Article structured data
   const articleSchema = {
@@ -119,16 +180,32 @@ export default async function ArticlePage({ params }: { params: Params }) {
       "@type": "WebPage",
       "@id": `${SITE_URL}/${post.category}/${post.slug}/`,
     },
-    ...(post.featuredImageUrl && {
+    ...(absoluteImageUrl && {
       image: {
         "@type": "ImageObject",
-        url: post.featuredImageUrl,
+        url: absoluteImageUrl,
       },
     }),
     description: post.excerpt
-      ? post.excerpt.replace(/<[^>]*>/g, '').substring(0, 200)
+      ? post.excerpt.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 200)
       : generateExcerpt(post.content, 200),
   };
+
+  const faqSchema =
+    faqPairs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqPairs.map(faq => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
 
   return (
     <>
@@ -138,6 +215,12 @@ export default async function ArticlePage({ params }: { params: Params }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
         />
+        {faqSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          />
+        )}
 
         <div className="container mx-auto px-4 py-6">
           <Breadcrumbs items={breadcrumbItems} />
@@ -186,11 +269,42 @@ export default async function ArticlePage({ params }: { params: Params }) {
                   </div>
                 )}
 
-                {/* Content */}
+                {/* Content (Part 1) */}
                 <div
                   className="article-content"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
+                  dangerouslySetInnerHTML={{ __html: firstHalfContent }}
                 />
+
+                {/* Contextual Internal Links Box */}
+                {secondHalfContent && contextualPosts.length > 0 && (
+                  <aside className="my-8 p-5 bg-red-50/70 border-l-4 border-red-700 rounded-r-xl">
+                    <p className="text-sm font-bold uppercase tracking-wider text-red-800 mb-3">
+                      📖 También te puede interesar en {category?.name || post.categoryName}
+                    </p>
+                    <ul className="space-y-2">
+                      {contextualPosts.map(cp => (
+                        <li key={cp.id} className="text-sm">
+                          <Link
+                            href={getPostUrl(cp)}
+                            className="font-medium text-gray-900 hover:text-red-700 underline decoration-red-300 hover:decoration-red-700 transition-colors"
+                          >
+                            → {cp.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </aside>
+                )}
+
+                {/* Content (Part 2) */}
+                {secondHalfContent && (
+                  <div
+                    className="article-content"
+                    dangerouslySetInnerHTML={{ __html: secondHalfContent }}
+                  />
+                )}
+
+                <ArticleEnhancer />
               </div>
 
               {/* Related Posts */}
