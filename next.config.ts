@@ -92,6 +92,26 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/:path*/feed/',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/:path*/feed',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/wp-json/:path*',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/comments/:path*',
+        destination: '/',
+        permanent: true,
+      },
       // Old footer links that were broken
       {
         source: '/recetas/:slug/',

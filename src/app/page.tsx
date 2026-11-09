@@ -72,7 +72,7 @@ function HeroBanner() {
 
         <div className="flex justify-center gap-12 md:gap-20 mt-12 min-h-[72px]">
           <div className="text-center">
-            <span className="block text-2xl md:text-3xl font-extrabold text-red-200 leading-tight">4,300+</span>
+            <span className="block text-2xl md:text-3xl font-extrabold text-red-200 leading-tight">5,700+</span>
             <span className="text-xs md:text-sm text-white/70 uppercase tracking-wider font-medium leading-normal">Recetas</span>
           </div>
           <div className="text-center">

@@ -5,7 +5,7 @@
     "name": "Blog",
     "parent": "",
     "description": "Your blog category",
-    "count": 1
+    "count": 122
   },
   {
     "id": 8,
@@ -21,7 +21,7 @@
     "name": "Cocina con Bajo Presupuesto",
     "parent": "",
     "description": "",
-    "count": 161
+    "count": 235
   },
   {
     "id": 16,
@@ -29,7 +29,7 @@
     "name": "Cocina Internacional",
     "parent": "",
     "description": "",
-    "count": 193
+    "count": 414
   },
   {
     "id": 28,
@@ -37,7 +37,7 @@
     "name": "Cocina para Acampar",
     "parent": "",
     "description": "",
-    "count": 191
+    "count": 212
   },
   {
     "id": 26,
@@ -45,7 +45,7 @@
     "name": "Cocina para Deportistas",
     "parent": "",
     "description": "",
-    "count": 188
+    "count": 225
   },
   {
     "id": 29,
@@ -61,7 +61,7 @@
     "name": "Cocina para Niños",
     "parent": "",
     "description": "",
-    "count": 192
+    "count": 227
   },
   {
     "id": 27,
@@ -69,7 +69,7 @@
     "name": "Cocina para Oficina",
     "parent": "",
     "description": "",
-    "count": 57
+    "count": 105
   },
   {
     "id": 23,
@@ -77,7 +77,7 @@
     "name": "Cocina para Personas Mayores",
     "parent": "",
     "description": "",
-    "count": 193
+    "count": 229
   },
   {
     "id": 25,
@@ -85,7 +85,7 @@
     "name": "Cocina para Principiantes",
     "parent": "",
     "description": "",
-    "count": 48
+    "count": 76
   },
   {
     "id": 19,
@@ -101,7 +101,7 @@
     "name": "Cocina Saludable",
     "parent": "",
     "description": "",
-    "count": 98
+    "count": 140
   },
   {
     "id": 24,
@@ -125,7 +125,7 @@
     "name": "Consejos para Emprender en Cocina",
     "parent": "",
     "description": "",
-    "count": 169
+    "count": 289
   },
   {
     "id": 4,
@@ -157,7 +157,7 @@
     "name": "Ingredientes y Sabores",
     "parent": "",
     "description": "",
-    "count": 193
+    "count": 349
   },
   {
     "id": 33,
@@ -165,7 +165,7 @@
     "name": "Mejores Chef",
     "parent": "",
     "description": "",
-    "count": 103
+    "count": 121
   },
   {
     "id": 9,
@@ -189,7 +189,7 @@
     "name": "Repostería y Panadería",
     "parent": "",
     "description": "",
-    "count": 102
+    "count": 193
   },
   {
     "id": 3,
@@ -197,7 +197,7 @@
     "name": "Reseñas",
     "parent": "",
     "description": "",
-    "count": 21
+    "count": 57
   },
   {
     "id": 31,
@@ -205,7 +205,7 @@
     "name": "Restaurantes de America",
     "parent": "",
     "description": "",
-    "count": 419
+    "count": 491
   },
   {
     "id": 32,
@@ -213,7 +213,7 @@
     "name": "Restaurantes en Europa",
     "parent": "",
     "description": "",
-    "count": 360
+    "count": 416
   },
   {
     "id": 12,
@@ -221,7 +221,7 @@
     "name": "Técnicas de Cocina",
     "parent": "",
     "description": "",
-    "count": 197
+    "count": 367
   },
   {
     "id": 20,
@@ -229,7 +229,7 @@
     "name": "Tendencias Gastronómicas",
     "parent": "",
     "description": "",
-    "count": 189
+    "count": 190
   },
   {
     "id": 17,
@@ -237,7 +237,7 @@
     "name": "Tips de Ahorro y Organización en Cocina",
     "parent": "",
     "description": "",
-    "count": 43
+    "count": 133
   },
   {
     "id": 6,
@@ -253,6 +253,6 @@
     "name": "Utensilios y Equipos",
     "parent": "",
     "description": "",
-    "count": 189
+    "count": 263
   }
 ]

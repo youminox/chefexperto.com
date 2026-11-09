@@ -1,16 +1,27 @@
-import postsData from '../../data/posts.json';
+import postsBaseData from '../../data/posts.json';
+import postsExtraData from '../../data/posts-extra.json';
 import categoriesData from '../../data/categories.json';
 import type { Post, Category } from './types';
 
-const posts: Post[] = postsData as Post[];
+const posts: Post[] = [
+  ...(postsExtraData as Post[]),
+  ...(postsBaseData as Post[]),
+];
 const categories: Category[] = categoriesData as Category[];
+
+const postBySlugMap = new Map<string, Post>();
+for (const p of posts) {
+  if (!postBySlugMap.has(p.slug)) {
+    postBySlugMap.set(p.slug, p);
+  }
+}
 
 export function getAllPosts(): Post[] {
   return posts;
 }
 
 export function getPostBySlug(slug: string): Post | undefined {
-  return posts.find(p => p.slug === slug);
+  return postBySlugMap.get(slug);
 }
 
 export function getPostsByCategorySlug(categorySlug: string): Post[] {

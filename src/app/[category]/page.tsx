@@ -9,7 +9,7 @@ import Sidebar from '@/components/Sidebar';
 import { getAllCategories, getCategoryBySlug, getPostsByCategorySlug, getPostUrl, getImageUrl, formatDate, SITE_NAME, SITE_URL } from '@/lib/data';
 import type { Post } from '@/lib/types';
 
-const POSTS_PER_PAGE = 24;
+const FEATURED_CARDS_COUNT = 48;
 
 type Params = Promise<{ category: string }>;
 
@@ -23,8 +23,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const category = getCategoryBySlug(categorySlug);
   if (!category) return {};
 
-  const title = `${category.name} — Artículos y Recetas`;
-  const description = `Explora ${category.count} artículos sobre ${category.name} en Chef Experto. Recetas, tips y guías completas.`;
+  const title = `${category.name} — Artículos, Recetas y Guías`;
+  const description = `Explora ${category.count} artículos y recetas verificadas sobre ${category.name} en Chef Experto. Técnicas, tiempos exactos y consejos paso a paso.`;
 
   return {
     title,
@@ -91,7 +91,8 @@ export default async function CategoryPage({ params }: { params: Params }) {
   }
 
   const allPosts = getPostsByCategorySlug(categorySlug);
-  const posts = allPosts.slice(0, POSTS_PER_PAGE * 10); // Show many posts
+  const featuredPosts = allPosts.slice(0, FEATURED_CARDS_COUNT);
+  const directoryPosts = allPosts.slice(FEATURED_CARDS_COUNT);
 
   const breadcrumbItems = [
     { label: 'Inicio', href: '/' },
@@ -105,22 +106,50 @@ export default async function CategoryPage({ params }: { params: Params }) {
         <div className="bg-gradient-to-b from-[#c0392b] via-[#a93226] to-[#922b21] text-white py-12">
           <div className="container mx-auto px-4">
             <Breadcrumbs items={breadcrumbItems} />
-            <h1 className="text-3xl md:text-4xl font-bold mt-4">{category.name}: Artículos y Recetas</h1>
-            <p className="text-gray-300 mt-2">{category.count} artículos sobre {category.name.toLowerCase()}</p>
+            <h1 className="text-3xl md:text-4xl font-bold mt-4">{category.name}: Artículos, Recetas y Guías</h1>
+            <p className="text-gray-200 mt-2">{allPosts.length} artículos especializados en {category.name.toLowerCase()}</p>
           </div>
         </div>
 
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Main content */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {posts.map(post => (
+                {featuredPosts.map(post => (
                   <CategoryPostCard key={post.id} post={post} />
                 ))}
               </div>
-              {posts.length === 0 && (
+
+              {allPosts.length === 0 && (
                 <p className="text-gray-500 text-center py-12">No hay artículos en esta categoría.</p>
+              )}
+
+              {/* Directorio Completo Indexable para garantizar 100% de cobertura a 2 clics del Home */}
+              {directoryPosts.length > 0 && (
+                <section className="mt-12 bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-xs">
+                  <div className="border-b border-gray-100 pb-4 mb-5">
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-red-700 block">
+                      📚 Catálogo Completo de la Categoría
+                    </span>
+                    <h2 className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
+                      Más Guías y Recetas en {category.name} ({directoryPosts.length})
+                    </h2>
+                  </div>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
+                    {directoryPosts.map(post => (
+                      <li key={post.id} className="border-b border-gray-50 pb-2">
+                        <Link
+                          href={getPostUrl(post)}
+                          className="text-gray-700 hover:text-red-700 font-medium transition-colors flex items-start gap-2"
+                        >
+                          <span className="text-red-600 font-bold">→</span>
+                          <span className="line-clamp-1">{post.title}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
               )}
             </div>
 
